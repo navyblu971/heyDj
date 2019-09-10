@@ -12,27 +12,17 @@ var mysql = require('mysql');
 var con = mysql.createConnection({
   host: "127.0.0.1",
   user: "root",
-  password: "mypass123",
-  database: "heyDjDB" , 
+  password: "password",
+  database: "heyDjBase" , 
   port : 33060
 });
 
-
-try {
-
-con.connect(function(err) {
-  if (err) throw err;
-  console.log("step 1");
-  con.query("SELECT * FROM songRequest", function (err, result, fields) {
-    if (err) throw err;
-    console.log(result);
-  });
-});
-
-} catch (e)
+con.connect(function (err)
 {
-  console.log(e); 
-}
+  if (err)
+  console.log ("mysql connexion err :" + err.message)
+
+});
 
 app.get('/', function (req, res) {
     res.render('index', {});
@@ -44,8 +34,24 @@ app.get("/url", (req, res, next) => {
 
 
 
-   app.get("/song/:song_id", (req, res, next) => {
-    res.json({message : "you are listing to song no " + req.params.song_id});
+app.get("/playlist/:barId", (req, res, next) => {
+
+
+    con.query("SELECT uri, date  FROM songs where idBar="+ req.params.barId, function(err, rows, fields) {
+      if (!err)
+        console.log('The solution is: ', rows);
+      else
+        console.log('Error while performing Query.');
+
+
+        res.json (rows)
+        /*
+        rows.forEach( (row) => {
+          console.log(`${row.id} is in ${row.uri}`);
+        });*/
+    });
+    //res.json({message : "you are listing to song no " + req.params.barId});
+    //res.json (rows)
    });
 
 

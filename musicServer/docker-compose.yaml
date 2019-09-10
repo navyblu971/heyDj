@@ -1,14 +1,52 @@
-version: '2'
+version: '3.3'
+
 services:
-  mysql:
-    container_name: flask_mysql
-    restart: always
-    image: mysql:latest
-    environment:
-      MYSQL_ROOT_PASSWORD: 'fatexide' # TODO: Change this
-      MYSQL_USER: 'test'
-      MYSQL_PASS: 'pass'
+  # Database
+  db:
+    image: mysql:5.7
     volumes:
-      - my-datavolume:/var/lib/mysql
+      - db_data:/var/lib/mysql
+    restart: always
+    ports:
+      # <Port exposed> : < MySQL Port running inside container>
+      - '33060:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+    networks:
+      - wpsite
+  # phpmyadmin
+  phpmyadmin:
+    depends_on:
+      - db
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    ports:
+      - '8181:80'
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: password 
+    networks:
+      - wpsite
+  # Wordpress
+  wordpress:
+    depends_on:
+      - db
+    image: wordpress:latest
+    ports:
+      - '8000:80'
+    restart: always
+    volumes: ['www:/var/www/html']
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+    networks:
+      - wpsite
+networks:
+  wpsite:
 volumes:
-  my-datavolume:
+  db_data:
+  www:
