@@ -3,7 +3,7 @@ var express = require('express');
  
 // Nous définissons ici les paramètres du serveur.
 var hostname = 'localhost'; 
-var port = 3000; 
+var port = 8181; 
  
 var app = express(); 
 
@@ -68,7 +68,7 @@ app.get("/url", (req, res, next) => {
 app.get("/playlist/:barId", (req, res, next) => {
 
 
-    con.query("SELECT uri, date  FROM songs where idBar="+ req.params.barId, function(err, rows, fields) {
+    con.query("SELECT id, uri  FROM songs where idBar="+ req.params.barId, function(err, rows, fields) {
       if (!err)
         console.log('The solution is: ', rows);
       else
