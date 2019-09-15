@@ -1,20 +1,25 @@
 //La variable express nous permettra d'utiliser les fonctionnalités du module Express.  
 var express = require('express'); 
- 
+var mysql = require('mysql');
 // Nous définissons ici les paramètres du serveur.
+const port = process.env.APP_PORT;
+const mysql_port = parseInt(process.env.APP_MYSQL_PORT);
+const mysql_ip = process.env.APP_MYSQL_IP
+const mysql_user = process.env.APP_MYSQL_USER
+const mysql_password = process.env.APP_MYSQL_PWD
 var hostname = 'localhost'; 
-var port = 8181; 
+//var port = 8181; 
  
 var app = express(); 
 
-var mysql = require('mysql');
+
 
 var con = mysql.createConnection({
-  host: "127.0.0.1",
-  user: "root",
+  host: "localhost",
+  user: mysql_user,
   password: "password",
   database: "heyDjBase" , 
-  port : 33060
+  port : mysql_port
 });
 
 con.connect(function (err)

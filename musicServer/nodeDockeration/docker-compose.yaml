@@ -1,0 +1,11 @@
+version: '3'
+services:
+  heydj_web:
+    environment:
+    - APP_PORT=8181
+    - APP_MYSQL_PORT= 3306
+    - APP_MYSQL_USER= "root"
+    - APP_MYSQL_PWD= "password"
+    build: .
+    ports:
+     - "127.0.0.1:8181:8181"
