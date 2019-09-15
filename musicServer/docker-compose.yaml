@@ -1,4 +1,4 @@
-version: '3.3'
+version: '3'
 
 services:
   # Database
@@ -43,6 +43,23 @@ services:
       WORDPRESS_DB_HOST: db:3306
       WORDPRESS_DB_USER: wordpress
       WORDPRESS_DB_PASSWORD: wordpress
+    networks:
+      - wpsite
+  #heyDjServer
+  heydj_web:
+    links:
+        - db
+    depends_on:
+      - db
+    environment:
+    - APP_PORT=8181
+    - APP_MYSQL_PORT= 3306
+    - APP_MYSQL_USER= "root"
+    - APP_MYSQL_PWD= "password"
+    - APP_MYSQL_IP=  db
+    image: navyblu971/hey-dj-server:v3
+    ports:
+     - "8181:8181"
     networks:
       - wpsite
 networks:

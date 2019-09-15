@@ -7,7 +7,7 @@ const mysql_port = parseInt(process.env.APP_MYSQL_PORT);
 const mysql_ip = process.env.APP_MYSQL_IP
 const mysql_user = process.env.APP_MYSQL_USER
 const mysql_password = process.env.APP_MYSQL_PWD
-var hostname = 'localhost'; 
+var hostname = '0.0.0.0'; 
 //var port = 8181; 
  
 var app = express(); 
@@ -15,11 +15,11 @@ var app = express();
 
 
 var con = mysql.createConnection({
-  host: "localhost",
+  host: mysql_ip,
   user: mysql_user,
   password: "password",
-  database: "heyDjBase" , 
-  port : mysql_port
+  database: "heyDjBase"  
+  /*port : mysql_port*/
 });
 
 con.connect(function (err)
@@ -77,7 +77,7 @@ app.get("/playlist/:barId", (req, res, next) => {
       if (!err)
         console.log('The solution is: ', rows);
       else
-        console.log('Error while performing Query.');
+        console.log('Error while performing Query. err =' + err.message);
 
 
         res.json (rows)

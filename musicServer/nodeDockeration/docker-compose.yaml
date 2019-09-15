@@ -6,6 +6,8 @@ services:
     - APP_MYSQL_PORT= 3306
     - APP_MYSQL_USER= "root"
     - APP_MYSQL_PWD= "password"
+    - APP_MYSQL_IP= 127.0.0.1
     build: .
+    image: navyblu971/hey-dj-server:v3
     ports:
-     - "127.0.0.1:8181:8181"
+     - "8181:8181"
