@@ -18,7 +18,8 @@ var con = mysql.createConnection({
   host: mysql_ip,
   user: mysql_user,
   password: "password",
-  database: "heyDjBase"  
+  database: "heyDjBase", 
+   debug : true
   /*port : mysql_port*/
 });
 
