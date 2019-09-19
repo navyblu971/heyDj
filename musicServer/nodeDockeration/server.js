@@ -15,12 +15,12 @@ var app = express();
 
 
 var con = mysql.createConnection({
-  host: mysql_ip,
-  user: mysql_user,
-  password: "password",
+  host: mysql_ip.trim(),
+  user: mysql_user.trim(),
+  password: process.env.APP_MYSQL_PWD.trim(),
   database: "heyDjBase", 
-   debug : true
-  /*port : mysql_port*/
+   debug : true, 
+  port : mysql_port
 });
 
 con.connect(function (err)
@@ -30,14 +30,46 @@ con.connect(function (err)
 
 });
 
+
+function addSong (uri, barId)
+{
+  con.query("INSERT INTO `songs` ( `uri`,  `idBar`) VALUES ( '" + uri+"', '"+ barId +"')" , function(err, rows, fields) {
+    if (err)
+      console.log('error while insert');
+    else
+      console.log('insert ok');
+
+
+      //res.send("insert ok")
+      /*
+      rows.forEach( (row) => {
+        console.log(`${row.id} is in ${row.uri}`);
+      });*/
+  });
+
+
+
+}
+
+app.use(express.urlencoded());
+
+// Parse JSON bodies (as sent by API clients)
+app.use(express.json());
+
+
 app.get('/requestSong.html', function(req, res) {
   res.sendFile( __dirname  + '/requestSong.html');
 });
 
 
 app.post('/post.html', function(req, res) {
-  var p1 = req.body.p1; 
-  console.log("p1=" + p1);
+  var uri = req.body.uri; 
+  var barId = req.body.barId ; 
+ 
+  //res.json ({name :p1, prenom:"inconnu"})
+  addSong (uri, barId) ; 
+  res.json ({"uri":uri , "barId":barId})
+ // res.render (p1)
 });
 
 
@@ -74,11 +106,11 @@ app.get("/url", (req, res, next) => {
 app.get("/playlist/:barId", (req, res, next) => {
 
 
-    con.query("SELECT id, uri  FROM songs where idBar="+ req.params.barId, function(err, rows, fields) {
+    con.query("SELECT uri, date  FROM songs where idBar="+ req.params.barId, function(err, rows, fields) {
       if (!err)
         console.log('The solution is: ', rows);
       else
-        console.log('Error while performing Query. err =' + err.message);
+        console.log('Error while performing Query.');
 
 
         res.json (rows)

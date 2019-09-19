@@ -1,7 +1,7 @@
 {
   "name": "docker_heyDj_app",
   "version": "1.0.0",
-  "description": "Node.js on Docker",
+  "description": "send your favorite song to your bar..",
   "author": "Atexide Fabrice <navyblu971@hotmail.com>",
   "main": "server.js",
   "scripts": {

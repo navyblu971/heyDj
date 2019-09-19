@@ -8,6 +8,6 @@ services:
     - APP_MYSQL_PWD= "password"
     - APP_MYSQL_IP= 127.0.0.1
     build: .
-    image: navyblu971/hey-dj-server:v3
+    image: navyblu971/hey-dj-server:v5
     ports:
      - "8181:8181"
