@@ -28,6 +28,7 @@ SET time_zone = "+00:00";
 -- Structure de la table `bars`
 --
 create DATABASE heyDjBase ; 
+use heyDjBase ; 
 
 CREATE TABLE `bars` (
   `id` int(16) NOT NULL,
