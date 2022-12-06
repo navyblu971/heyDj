@@ -9,7 +9,7 @@
   "author": "atexide fabrice",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1",
+    "express": "^4.18.2",
     "mocha": "^6.2.0",
     "mysql": "^2.17.1",
     "sequelize": "^5.18.0"
